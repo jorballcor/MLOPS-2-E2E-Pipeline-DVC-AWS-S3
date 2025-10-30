@@ -5,6 +5,7 @@ description = "This project covers the end to end understanding for creating an 
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "dvclive>=3.48.5",
     "logging>=0.4.9.6",
     "nltk>=3.9.2",
     "numpy>=2.3.4",
