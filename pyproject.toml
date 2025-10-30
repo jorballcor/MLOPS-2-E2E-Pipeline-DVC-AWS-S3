@@ -9,6 +9,7 @@ dependencies = [
     "logging>=0.4.9.6",
     "nltk>=3.9.2",
     "numpy>=2.3.4",
+    "nvidia-ml-py>=13.580.82",
     "pandas>=2.3.3",
     "pyyaml>=6.0.3",
     "scikit-learn>=1.7.2",
