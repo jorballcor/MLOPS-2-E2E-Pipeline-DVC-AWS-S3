@@ -113,16 +113,24 @@ def save_metrics(metrics: dict, file_path: str) -> None:
 def main():
     try:
         params = load_params(params_path='params.yaml')
-        # params = {'n_estimators': 25, 'random_state': 2}  # Example hardcoded params
+        #params = {'n_estimators': 25, 'random_state': 2}  # Example hardcoded params
         clf = load_model('./models/model.pkl')
         test_data = load_data('./data/processed/test_tfidf.csv')
         
         X_test = test_data.iloc[:, :-1].values
         y_test = test_data.iloc[:, -1].values
 
-        metrics = evaluate_model(clf, X_test, y_test)        
-        save_metrics(metrics, 'reports/metrics.json')
+        metrics = evaluate_model(clf, X_test, y_test)
+
+        # Experiment tracking using dvclive
+        with Live(save_dvc_exp=True) as live:
+            live.log_metric('accuracy', accuracy_score(y_test, y_test))
+            live.log_metric('precision', precision_score(y_test, y_test))
+            live.log_metric('recall', recall_score(y_test, y_test))
+
+            live.log_params(params)
         
+        save_metrics(metrics, 'reports/metrics.json')
     except Exception as e:
         logger.error('Failed to complete the model evaluation process: %s', e)
         print(f"Error: {e}")
